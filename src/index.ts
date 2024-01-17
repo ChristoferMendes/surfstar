@@ -3,12 +3,12 @@ import { parse } from "./parser/parser";
 import { render } from "./renderer/renderer";
 import { loadFile } from "./utils/file-loader";
 
-export function compileTemplate(
+export async function compileTemplate(
   filePath: string,
   data: Record<string, any>
-): string {
+): Promise<string> {
   try {
-    const templateSource = loadFile(filePath);
+    const templateSource = await loadFile(filePath);
 
     const tokens = tokenize(templateSource);
 
@@ -21,5 +21,3 @@ export function compileTemplate(
     throw error;
   }
 }
-
-compileTemplate("a.surf", { name: "John" });
