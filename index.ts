@@ -1,0 +1,1 @@
+export { compileTemplate } from "./src";
