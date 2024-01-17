@@ -1,5 +1,3 @@
-// src/utils/file-loader.ts
-
 import * as fs from 'fs';
 
 export function loadFile(filePath: string): string {
