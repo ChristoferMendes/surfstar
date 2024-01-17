@@ -1,11 +1,9 @@
-import * as fs from 'fs';
-
-export function loadFile(filePath: string): string {
+export function loadFile(filePath: string): Promise<string> {
   try {
-    const content = fs.readFileSync(filePath, 'utf-8');
-    return content;
+    const content = Bun.file(filePath);
+    return content.text();
   } catch (error) {
-    console.error('Error loading file:', error);
+    console.error("Error loading file:", error);
     throw error;
   }
 }
