@@ -1,6 +1,7 @@
 {
   "name": "surfstar",
   "main": "dist/index.js",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "build": "bun build --target=bun --minify index.ts --outdir ./dist && bun run build:types",
