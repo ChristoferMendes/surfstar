@@ -1,0 +1,4 @@
+Good {{ dayTime }}
+
+Hello {{ person.name }}, you have {{ person.age }} years
+
