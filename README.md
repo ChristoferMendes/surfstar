@@ -24,7 +24,7 @@ Ready to ride the wave? Dive into our [documentation](link-to-docs) to get start
 ### Installation 🌐
 
 ```bash
-npm install surfstar
+bun install surfstar
 ```
 
 ### Usage ✨
