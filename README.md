@@ -5,6 +5,10 @@
 
 ![surfstar](https://github.com/ChristoferMendes/surfstar/assets/107426464/165060de-cf7e-427c-a4f4-7cba5d00e63e)
 
+### Requirements
+
+- [Bun](https://bun.sh/) installed
+
 
 ## 🌊 Ride the Wave of Efficiency with Surfstar 🌊
 
