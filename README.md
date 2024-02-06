@@ -10,6 +10,8 @@
 
 Welcome to Surfstar, your dynamic template engine for Node.js and TypeScript. Surfstar enables you to seamlessly integrate dynamic content into your templates, making it easy to generate HTML, emails, or any text-based content with a focus on simplicity and flexibility.
 
+### Surfstar is heavily inspired by [Handlebars](https://github.com/handlebars-lang/handlebars.js/)! Please go there to take a look.
+
 ### Why Surfstar?
 
 Surfstar is designed to make templating a breeze. Just like riding the perfect wave, our template engine provides a fluid and intuitive experience. Whether you're a beginner or an experienced developer, Surfstar is here to streamline your templating process and keep your projects flowing smoothly.
