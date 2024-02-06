@@ -3,6 +3,9 @@
   # 🏄‍♂️ Surfstar 🏄‍♀️
 </div>
 
+![surfstar](https://github.com/ChristoferMendes/surfstar/assets/107426464/165060de-cf7e-427c-a4f4-7cba5d00e63e)
+
+
 ## 🌊 Ride the Wave of Efficiency with Surfstar 🌊
 
 Welcome to Surfstar, your dynamic template engine for Node.js and TypeScript. Surfstar enables you to seamlessly integrate dynamic content into your templates, making it easy to generate HTML, emails, or any text-based content with a focus on simplicity and flexibility.
@@ -15,7 +18,6 @@ Surfstar is designed to make templating a breeze. Just like riding the perfect w
 
 - **Simple Syntax:** Surfstar uses a simple and intuitive syntax for embedding variables in your templates.
 - **Modular Design:** The template engine is modular, allowing you to extend and customize its functionality.
-- **TypeScript Support:** Written in TypeScript, Surfstar provides type safety and autocompletion in your TypeScript projects.
 
 ### Getting Started 🌊
 
