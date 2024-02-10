@@ -13,5 +13,8 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "wave-shell": "0.0.10"
   }
 }
