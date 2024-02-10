@@ -25,7 +25,6 @@ jobs:
 
     - name: Build
       run: bun run build
-
     - name: Publish
       run: npm publish
       env:
