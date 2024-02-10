@@ -27,7 +27,7 @@ Surfstar is designed to make templating a breeze. Just like riding the perfect w
 
 ### Getting Started 🌊
 
-Ready to ride the wave? Dive into our [documentation](link-to-docs) to get started with Surfstar. Whether you're a beginner or an experienced developer, we've got you covered with easy-to-follow guides and examples.
+Ready to ride the wave?
 
 ### Installation 🌐
 
