@@ -1,15 +1,17 @@
 import dts from 'bun-plugin-dts'
 
 async function build() {
-  console.log('Building types...')
+  console.log('Building...')
 
   await Bun.build({
     entrypoints: ['index.ts'],
     outdir: 'dist',
-    plugins: [dts()]
+    plugins: [dts()],
+    target: 'bun',
+    minify: true
   })
 
-  console.log('Types built!')
+  console.log('Build done!')
 }
 
 build()

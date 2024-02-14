@@ -4,8 +4,7 @@
   "version": "0.0.6",
   "type": "module",
   "scripts": {
-    "build": "bun build --target=bun --minify index.ts --outdir ./dist && bun run build:types",
-    "build:types": "bun run src/build-types.ts"
+    "build": "bun src/builder.ts"
   },
   "devDependencies": {
     "bun-plugin-dts": "^0.2.1",
