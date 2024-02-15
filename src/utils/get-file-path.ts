@@ -1,24 +1,13 @@
 import { existsSync } from "fs";
+import { join } from "path";
 
-export function getFilePath(pathWithoutExtension: string, {
-  possibleExtensions = [".ts", ".js", ".tsx", ".jsx", '.surf'],
-}: {
-  possibleExtensions?: string[]
-} = {
-}) {
-  const pathAlreadyHasSomeExtension = pathWithoutExtension.includes(".");
+export function getFilePath(path: string) {
+  const root = join(__dirname, "..", "..")
+  const isDevMode = existsSync(join(root, 'src'))
 
-  if (pathAlreadyHasSomeExtension) return pathWithoutExtension;
-
-  for (const extension of possibleExtensions) {
-    const filePath = pathWithoutExtension + extension;
-    const fileExists = existsSync(filePath);
-
-    if (fileExists) {
-      return filePath;
-    }
+  if (isDevMode) {
+    return path;
   }
 
-  return null;
-
+  return path.replace('.surf', '.js')
 }
