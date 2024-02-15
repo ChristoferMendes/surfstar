@@ -1,13 +1,10 @@
-import { existsSync } from "fs";
-import { join } from "path";
 
 export function getFilePath(path: string) {
-  const root = join(__dirname, "..", "..")
-  const isDevMode = existsSync(join(root, 'src'))
+  const isProdMod = import.meta.dir.endsWith('dist')
 
-  if (isDevMode) {
-    return path;
+  if (isProdMod) {
+    return path.replace('.surf', '.js')
   }
-
-  return path.replace('.surf', '.js')
+  
+  return path;
 }
