@@ -1,12 +1,10 @@
-import { getFilePath } from "./get-file-path";
+import { existsSync } from "fs";
 
 export function loadFile(filePath: string): Promise<string> {
   try {
-    const path = getFilePath(filePath);
+    if (!existsSync(filePath)) throw new Error(`File not found: ${filePath}`);
 
-    if (!path) throw new Error(`File not found: ${filePath}`);
-
-    const content = Bun.file(path);
+    const content = Bun.file(filePath);
     return content.text();
   } catch (error) {
     console.error("Error loading file:", error);
