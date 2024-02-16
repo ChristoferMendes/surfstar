@@ -12,6 +12,10 @@
     "downlevelIteration": true,
     "skipLibCheck": true,
     "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["src/*"],
+    },
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,

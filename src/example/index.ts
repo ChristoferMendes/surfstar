@@ -1,7 +1,7 @@
 import { join } from "path";
 import { compileTemplate } from "..";
 
-const templatePath = join(__dirname, "hello-world.surf");
+const templatePath = join(import.meta.dir, "hello-world.surf");
 
 function getPersonInfo() {
   const bornDate = new Date("1990-01-01");
