@@ -1,6 +1,6 @@
 {
   "name": "surfstar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A modern template engine for Bun, inspired by Handlebars and EJS, with a focus on simplicity and performance.",
   "main": "dist/index.js",
   "author": "ChristoferMendes",
