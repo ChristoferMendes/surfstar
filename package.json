@@ -1,7 +1,38 @@
 {
   "name": "surfstar",
   "version": "1.0.0",
+  "description": "A modern template engine for Bun, inspired by Handlebars and EJS, with a focus on simplicity and performance.",
   "main": "dist/index.js",
+  "author": "ChristoferMendes",
+  "license": "MIT",
+  "keywords": [
+    "web",
+    "framework",
+    "typescript",
+    "bun",
+    "surfstar",
+    "template",
+    "engine",
+    "html",
+    "handlebars",
+    "ejs",
+    "template-engine",
+    "html-template",
+    "html-templates",
+    "html-rendering"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChristoferMendes/surfstar"
+  },
+  "bugs": {
+    "url": "https://github.com/ChristoferMendes/surfstar/issues"
+  },
+  "homepage": "https://github.com/ChristoferMendes/surfstar#readme",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "devDependencies": {
     "bun-plugin-dts": "^0.2.1",
     "bun-types": "latest"
@@ -12,5 +43,8 @@
   "scripts": {
     "build": "bun src/builder.ts"
   },
-  "type": "module"
+  "type": "module",
+  "engines": {
+    "bun": ">=1.0.0"
+  }
 }
