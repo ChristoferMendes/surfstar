@@ -1,1 +1,1 @@
-export { compileTemplate } from "./src";
+export { compileTemplate, SurfstarErrorType, SurfstarError } from "./src";
