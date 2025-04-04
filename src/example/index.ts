@@ -9,6 +9,12 @@ function getPersonInfo() {
   return {
     name: "John Doe",
     age: new Date().getFullYear() - bornDate.getFullYear(),
+    hobbies: ["surfing", "coding", "reading"],
+    foods: [
+      { name: "Pizza", price: "$10" },
+      { name: "Burger", price: "$8" },
+      { name: "Sushi", price: "$15" }
+    ]
   };
 }
 

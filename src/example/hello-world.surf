@@ -1,4 +1,13 @@
-Good {{ dayTime }}
+Now is {{ dayTimeNow }}
 
 Hello {{ person.name }}, you have {{ person.age }} years
 
+Your hobbies:
+{{#each person.hobbies}}
+  - {{this}} (index: {{@index}})
+{{/each}}
+
+Your favorite foods:
+{{#each person.foods}}
+  - {{this.name}} costs {{this.price}}
+{{/each}}
