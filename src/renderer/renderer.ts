@@ -34,7 +34,6 @@ function renderPart(part: Part, data: Record<string, any>, filePath?: string): s
       case 'EACH':
         return renderEach(part, data, filePath);
       default:
-        const exhaustiveCheck: never = part;
         throw SurfstarError.rendererError(
           `Unknown node type: ${(part as any).type}`,
           { filePath }
