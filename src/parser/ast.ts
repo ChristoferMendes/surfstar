@@ -1,5 +1,3 @@
-// src/parser/ast.ts
-
 export interface TextNode {
   type: 'TEXT';
   content: string;
@@ -10,10 +8,16 @@ export interface VariableNode {
   name: string;
 }
 
-export interface TemplateNode {
-  type: 'TEMPLATE';
-  content: Array<TextNode | VariableNode>;
+export interface EachNode {
+  type: 'EACH';
+  arrayName: string;
+  content: Array<TextNode | VariableNode | EachNode>;
 }
 
-export type Part = TextNode | VariableNode;
-export type Node = TextNode | VariableNode | TemplateNode;
+export interface TemplateNode {
+  type: 'TEMPLATE';
+  content: Array<TextNode | VariableNode | EachNode>;
+}
+
+export type Part = TextNode | VariableNode | EachNode;
+export type Node = TextNode | VariableNode | TemplateNode | EachNode;
