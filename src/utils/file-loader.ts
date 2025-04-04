@@ -1,13 +1,23 @@
 import { existsSync } from "fs";
+import { SurfstarError } from "../errors/SurfstarError";
+import { handleError } from "./error-handler";
 
-export function loadFile(filePath: string): Promise<string> {
+export async function loadFile(filePath: string): Promise<string> {
   try {
-    if (!existsSync(filePath)) throw new Error(`File not found: ${filePath}`);
-
+    validateFileExists(filePath);
     const content = Bun.file(filePath);
-    return content.text();
+    return await content.text();
   } catch (error) {
-    console.error("Error loading file:", error);
-    throw error;
+    handleError(error, {
+      filePath,
+      defaultMessage: `Error loading file: ${filePath}`,
+      errorFactory: SurfstarError.fileError
+    });
+  }
+}
+
+function validateFileExists(filePath: string): void {
+  if (!existsSync(filePath)) {
+    throw SurfstarError.fileError(`File not found: ${filePath}`, { filePath });
   }
 }
