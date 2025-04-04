@@ -5,7 +5,7 @@ import { handleError } from '../utils/error-handler';
 export function render(node: Node, data: Record<string, any>, filePath?: string): string {
   try {
     validateTemplateNode(node, filePath);
-    return (node as TemplateNode).content.map(part => renderPart(part, data, filePath)).join('');
+    return node.content.map(part => renderPart(part, data, filePath)).join('');
   } catch (error) {
     return handleError(error, {
       filePath,
@@ -95,7 +95,9 @@ function renderEach(part: Part, data: Record<string, any>, filePath?: string): s
 
   try {
     const array = getNestedPropertyValue(data, part.arrayName.split('.'));
-    validateEachArray(array, part.arrayName, filePath);
+    const isValid = validateEachArray(array, part.arrayName, filePath);
+
+    if (!isValid) return '';
     
     return array
       .map((item, index) => {
@@ -116,7 +118,7 @@ function renderEach(part: Part, data: Record<string, any>, filePath?: string): s
   }
 }
 
-function validateEachArray(array: any, arrayName: string, filePath?: string): void {
+function validateEachArray(array: any[], arrayName: string, filePath?: string): array is any[] {
   if (array === undefined) {
     throw SurfstarError.rendererError(
       `Cannot find array '${arrayName}' in template data`,
@@ -130,4 +132,6 @@ function validateEachArray(array: any, arrayName: string, filePath?: string): vo
       { filePath }
     );
   }
+
+  return true;
 }
