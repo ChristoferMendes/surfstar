@@ -1,11 +1,7 @@
 {
   "name": "surfstar",
-  "main": "dist/index.js",
   "version": "0.0.12",
-  "type": "module",
-  "scripts": {
-    "build": "bun src/builder.ts"
-  },
+  "main": "dist/index.js",
   "devDependencies": {
     "bun-plugin-dts": "^0.2.1",
     "bun-types": "latest"
@@ -13,7 +9,8 @@
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "dependencies": {
-    "wave-shell": "0.0.10"
-  }
+  "scripts": {
+    "build": "bun src/builder.ts"
+  },
+  "type": "module"
 }
