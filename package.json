@@ -3,6 +3,7 @@
   "version": "1.0.2",
   "description": "A modern template engine for Bun, inspired by Handlebars and EJS, with a focus on simplicity and performance.",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "ChristoferMendes",
   "license": "MIT",
   "keywords": [
