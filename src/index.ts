@@ -1,14 +1,11 @@
-import { tokenize } from "./lexer/lexer";
-import { parse } from "./parser/parser";
-import { render } from "./renderer/renderer";
-import { loadFile } from "./utils/file-loader";
-import { SurfstarError, SurfstarErrorType } from "./errors/SurfstarError";
-import { handleError } from "./utils/error-handler";
+import { tokenize } from './lexer/lexer';
+import { parse } from './parser/parser';
+import { render } from './renderer/renderer';
+import { loadFile } from './utils/file-loader';
+import { SurfstarError, SurfstarErrorType } from './errors/SurfstarError';
+import { handleError } from './utils/error-handler';
 
-export async function compileTemplate(
-  filePath: string,
-  data: Record<string, any>
-): Promise<string> {
+export async function compileTemplate(filePath: string, data: Record<string, any>): Promise<string> {
   try {
     const templateSource = await loadFile(filePath);
     const tokens = tokenize(templateSource, filePath);
@@ -18,7 +15,7 @@ export async function compileTemplate(
   } catch (error) {
     handleError(error, {
       filePath,
-      defaultMessage: "Error compiling template",
+      defaultMessage: 'Error compiling template',
       errorFactory: SurfstarError.compilationError
     });
   }

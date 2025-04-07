@@ -1,6 +1,6 @@
-import { existsSync } from "fs";
-import { SurfstarError } from "../errors/SurfstarError";
-import { handleError } from "./error-handler";
+import { existsSync } from 'node:fs';
+import { SurfstarError } from '../errors/SurfstarError';
+import { handleError } from './error-handler';
 
 export async function loadFile(filePath: string): Promise<string> {
   try {

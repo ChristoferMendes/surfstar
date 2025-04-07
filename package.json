@@ -6,6 +6,12 @@
   "types": "dist/index.d.ts",
   "author": "ChristoferMendes",
   "license": "MIT",
+  "scripts": {
+    "build": "bun src/builder.ts",
+    "example": "bun src/example/index.ts",
+    "lint": "biome lint --unsafe --write",
+    "format": "biome format --write ."
+  },
   "keywords": [
     "web",
     "framework",
@@ -30,19 +36,14 @@
     "url": "https://github.com/ChristoferMendes/surfstar/issues"
   },
   "homepage": "https://github.com/ChristoferMendes/surfstar#readme",
-  "files": [
-    "dist",
-    "README.md"
-  ],
+  "files": ["dist", "README.md"],
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "bun-plugin-dts": "^0.2.1",
     "bun-types": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
-  },
-  "scripts": {
-    "build": "bun src/builder.ts"
   },
   "type": "module",
   "engines": {

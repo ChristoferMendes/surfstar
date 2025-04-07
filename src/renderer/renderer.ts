@@ -1,15 +1,15 @@
-import { Node, Part, TemplateNode } from '../parser/ast';
+import type { Node, Part, TemplateNode } from '../parser/ast';
 import { SurfstarError } from '../errors/SurfstarError';
 import { handleError } from '../utils/error-handler';
 
 export function render(node: Node, data: Record<string, any>, filePath?: string): string {
   try {
     validateTemplateNode(node, filePath);
-    return node.content.map(part => renderPart(part, data, filePath)).join('');
+    return node.content.map((part) => renderPart(part, data, filePath)).join('');
   } catch (error) {
     return handleError(error, {
       filePath,
-      defaultMessage: "Error rendering template",
+      defaultMessage: 'Error rendering template',
       errorFactory: SurfstarError.rendererError
     });
   }
@@ -17,10 +17,7 @@ export function render(node: Node, data: Record<string, any>, filePath?: string)
 
 function validateTemplateNode(node: Node, filePath?: string): asserts node is TemplateNode {
   if (node.type !== 'TEMPLATE') {
-    throw SurfstarError.rendererError(
-      `Expected template node but got ${node.type}`,
-      { filePath }
-    );
+    throw SurfstarError.rendererError(`Expected template node but got ${node.type}`, { filePath });
   }
 }
 
@@ -34,10 +31,7 @@ function renderPart(part: Part, data: Record<string, any>, filePath?: string): s
       case 'EACH':
         return renderEach(part, data, filePath);
       default:
-        throw SurfstarError.rendererError(
-          `Unknown node type: ${(part as any).type}`,
-          { filePath }
-        );
+        throw SurfstarError.rendererError(`Unknown node type: ${(part as any).type}`, { filePath });
     }
   } catch (error) {
     return handleError(error, {
@@ -50,18 +44,13 @@ function renderPart(part: Part, data: Record<string, any>, filePath?: string): s
 
 function renderVariable(part: Part, data: Record<string, any>, filePath?: string): string {
   if (part.type !== 'VARIABLE') {
-    throw SurfstarError.rendererError(
-      `Expected variable node but got ${part.type}`,
-      { filePath }
-    );
+    throw SurfstarError.rendererError(`Expected variable node but got ${part.type}`, { filePath });
   }
 
   try {
     const variablePath = part.name.split('.');
     const variableValue = getNestedPropertyValue(data, variablePath);
-    return variableValue !== undefined && variableValue !== null 
-      ? String(variableValue) 
-      : '';
+    return variableValue !== undefined && variableValue !== null ? String(variableValue) : '';
   } catch (error) {
     return handleError(error, {
       filePath,
@@ -86,10 +75,7 @@ function getNestedPropertyValue(data: Record<string, any>, variablePath: string[
 
 function renderEach(part: Part, data: Record<string, any>, filePath?: string): string {
   if (part.type !== 'EACH') {
-    throw SurfstarError.rendererError(
-      `Expected each node but got ${part.type}`,
-      { filePath }
-    );
+    throw SurfstarError.rendererError(`Expected each node but got ${part.type}`, { filePath });
   }
 
   try {
@@ -97,15 +83,15 @@ function renderEach(part: Part, data: Record<string, any>, filePath?: string): s
     const isValid = validateEachArray(array, part.arrayName, filePath);
 
     if (!isValid) return '';
-    
+
     return array
       .map((item, index) => {
         const itemContext = {
           ...data,
           this: item,
-          '@index': index,
+          '@index': index
         };
-        return part.content.map(node => renderPart(node, itemContext, filePath)).join('');
+        return part.content.map((node) => renderPart(node, itemContext, filePath)).join('');
       })
       .join('');
   } catch (error) {
@@ -119,17 +105,11 @@ function renderEach(part: Part, data: Record<string, any>, filePath?: string): s
 
 function validateEachArray(array: any[], arrayName: string, filePath?: string): array is any[] {
   if (array === undefined) {
-    throw SurfstarError.rendererError(
-      `Cannot find array '${arrayName}' in template data`,
-      { filePath }
-    );
+    throw SurfstarError.rendererError(`Cannot find array '${arrayName}' in template data`, { filePath });
   }
-  
+
   if (!Array.isArray(array)) {
-    throw SurfstarError.rendererError(
-      `Expected '${arrayName}' to be an array, but got ${typeof array}`,
-      { filePath }
-    );
+    throw SurfstarError.rendererError(`Expected '${arrayName}' to be an array, but got ${typeof array}`, { filePath });
   }
 
   return true;

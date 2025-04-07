@@ -3,7 +3,7 @@ export enum SurfstarErrorType {
   PARSER_ERROR = 'PARSER_ERROR',
   RENDERER_ERROR = 'RENDERER_ERROR',
   FILE_ERROR = 'FILE_ERROR',
-  COMPILATION_ERROR = 'COMPILATION_ERROR',
+  COMPILATION_ERROR = 'COMPILATION_ERROR'
 }
 
 export interface SurfstarErrorOptions {
@@ -24,7 +24,7 @@ export class SurfstarError extends Error {
 
   constructor(options: SurfstarErrorOptions) {
     const { message, type, filePath, lineNumber, columnNumber, originalError } = options;
-    
+
     let fullMessage = message;
     if (filePath) {
       fullMessage += ` in ${filePath}`;
@@ -35,23 +35,23 @@ export class SurfstarError extends Error {
         }
       }
     }
-    
+
     super(fullMessage);
-    
+
     this.name = 'SurfstarError';
     this.type = type;
     this.filePath = filePath;
     this.lineNumber = lineNumber;
     this.columnNumber = columnNumber;
     this.originalError = originalError;
-    
+
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, SurfstarError);
     }
   }
 
   static lexerError(
-    message: string, 
+    message: string,
     options: { filePath?: string; lineNumber?: number; columnNumber?: number; originalError?: Error } = {}
   ): SurfstarError {
     return new SurfstarError({
@@ -62,7 +62,7 @@ export class SurfstarError extends Error {
   }
 
   static parserError(
-    message: string, 
+    message: string,
     options: { filePath?: string; lineNumber?: number; columnNumber?: number; originalError?: Error } = {}
   ): SurfstarError {
     return new SurfstarError({
@@ -73,7 +73,7 @@ export class SurfstarError extends Error {
   }
 
   static rendererError(
-    message: string, 
+    message: string,
     options: { filePath?: string; lineNumber?: number; columnNumber?: number; originalError?: Error } = {}
   ): SurfstarError {
     return new SurfstarError({
@@ -83,10 +83,7 @@ export class SurfstarError extends Error {
     });
   }
 
-  static fileError(
-    message: string, 
-    options: { filePath?: string; originalError?: Error } = {}
-  ): SurfstarError {
+  static fileError(message: string, options: { filePath?: string; originalError?: Error } = {}): SurfstarError {
     return new SurfstarError({
       message,
       type: SurfstarErrorType.FILE_ERROR,
@@ -94,14 +91,11 @@ export class SurfstarError extends Error {
     });
   }
 
-  static compilationError(
-    message: string, 
-    options: { filePath?: string; originalError?: Error } = {}
-  ): SurfstarError {
+  static compilationError(message: string, options: { filePath?: string; originalError?: Error } = {}): SurfstarError {
     return new SurfstarError({
       message,
       type: SurfstarErrorType.COMPILATION_ERROR,
       ...options
     });
   }
-} 
+}

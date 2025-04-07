@@ -1,5 +1,5 @@
-import { Token, TokenType } from '../lexer/lexer';
-import { Node, TemplateNode, TextNode, VariableNode, EachNode } from './ast';
+import { type Token, TokenType } from '../lexer/lexer';
+import type { Node, TemplateNode, TextNode, VariableNode, EachNode } from './ast';
 import { SurfstarError } from '../errors/SurfstarError';
 import { handleError } from '../utils/error-handler';
 
@@ -28,7 +28,7 @@ export function parse(tokens: Token[], filePath?: string): Node {
             filePath,
             lineNumber: token.line,
             columnNumber: token.column,
-            defaultMessage: "Error parsing each block",
+            defaultMessage: 'Error parsing each block',
             errorFactory: SurfstarError.parserError
           });
         }
@@ -41,7 +41,7 @@ export function parse(tokens: Token[], filePath?: string): Node {
   } catch (error) {
     handleError(error, {
       filePath,
-      defaultMessage: "Error parsing template",
+      defaultMessage: 'Error parsing template',
       errorFactory: SurfstarError.parserError
     });
   }
@@ -50,16 +50,13 @@ export function parse(tokens: Token[], filePath?: string): Node {
 function createEmptyTemplateNode(): TemplateNode {
   return {
     type: 'TEMPLATE',
-    content: [],
+    content: []
   };
 }
 
-function addTextNodeToTemplate(
-  node: TemplateNode | EachNode, 
-  text: string
-): string {
+function addTextNodeToTemplate(node: TemplateNode | EachNode, text: string): string {
   if (!text) return text;
-  
+
   const processedText = processTextContent(node, text);
   if (processedText) {
     const textNode: TextNode = { type: 'TEXT', content: processedText };
@@ -90,10 +87,7 @@ function normalizeNewlines(text: string): string {
   return text.replace(/\n/g, '\n');
 }
 
-function addVariableNodeToTemplate(
-  node: TemplateNode | EachNode, 
-  variableName: string
-): void {
+function addVariableNodeToTemplate(node: TemplateNode | EachNode, variableName: string): void {
   const variableNode: VariableNode = { type: 'VARIABLE', name: variableName };
   node.content.push(variableNode);
 }
@@ -119,28 +113,25 @@ function parseEachBlock(tokens: Token[], startIndex: number, filePath?: string):
         filePath,
         lineNumber: token.line,
         columnNumber: token.column,
-        defaultMessage: "Error processing token in each block",
+        defaultMessage: 'Error processing token in each block',
         errorFactory: SurfstarError.parserError
       });
     }
     i++;
   }
 
-  throw SurfstarError.parserError(
-    "Unclosed each block",
-    { 
-      filePath, 
-      lineNumber: startToken.line, 
-      columnNumber: startToken.column 
-    }
-  );
+  throw SurfstarError.parserError('Unclosed each block', {
+    filePath,
+    lineNumber: startToken.line,
+    columnNumber: startToken.column
+  });
 }
 
 function createEachNode(arrayName: string): EachNode {
   return {
     type: 'EACH',
     arrayName,
-    content: [],
+    content: []
   };
 }
 
@@ -155,7 +146,7 @@ function handleRemainingText(eachNode: EachNode, text: string): void {
 }
 
 function ensureLeadingNewline(text: string): string {
-  return text.includes('\n') ? text : '\n' + text;
+  return text.includes('\n') ? text : `\n${text}`;
 }
 
 function handleToken(
@@ -225,28 +216,20 @@ function shouldUpdateIndex(token: Token): boolean {
   return token.type === TokenType.EACH_START;
 }
 
-function processNestedEachBlock(
-  eachNode: EachNode,
-  tokens: Token[],
-  index: number,
-  filePath?: string
-): void {
+function processNestedEachBlock(eachNode: EachNode, tokens: Token[], index: number, filePath?: string): void {
   try {
     const [nestedEachNode, newIndex] = parseEachBlock(tokens, index, filePath);
     eachNode.content.push(nestedEachNode);
     index = newIndex;
   } catch (error) {
     if (error instanceof SurfstarError) throw error;
-    
+
     const token = tokens[index];
-    throw SurfstarError.parserError(
-      "Error processing nested each block",
-      { 
-        filePath, 
-        lineNumber: token.line, 
-        columnNumber: token.column,
-        originalError: error instanceof Error ? error : undefined
-      }
-    );
+    throw SurfstarError.parserError('Error processing nested each block', {
+      filePath,
+      lineNumber: token.line,
+      columnNumber: token.column,
+      originalError: error instanceof Error ? error : undefined
+    });
   }
 }

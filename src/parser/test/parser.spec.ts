@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 import { parse } from '../parser';
-import { Node } from '../ast';
+import type { Node } from '../ast';
 import { tokenize } from '../../lexer/lexer';
 
 describe('Parser Tests', () => {
@@ -11,10 +11,9 @@ describe('Parser Tests', () => {
       content: [
         { type: 'TEXT', content: 'Hello, ' },
         { type: 'VARIABLE', name: 'name' },
-        { type: 'TEXT', content: '!' },
-      ],
+        { type: 'TEXT', content: '!' }
+      ]
     };
-
 
     const result = parse(tokenize(template));
 
@@ -29,8 +28,8 @@ describe('Parser Tests', () => {
         { type: 'VARIABLE', name: 'greeting' },
         { type: 'TEXT', content: ', ' },
         { type: 'VARIABLE', name: 'name' },
-        { type: 'TEXT', content: '!' },
-      ],
+        { type: 'TEXT', content: '!' }
+      ]
     };
 
     const result = parse(tokenize(template));
@@ -46,8 +45,8 @@ describe('Parser Tests', () => {
         { type: 'VARIABLE', name: 'greeting' },
         { type: 'TEXT', content: ', ' },
         { type: 'VARIABLE', name: 'person.name' },
-        { type: 'TEXT', content: '!' },
-      ],
+        { type: 'TEXT', content: '!' }
+      ]
     };
 
     const result = parse(tokenize(template));
@@ -59,9 +58,7 @@ describe('Parser Tests', () => {
     const template = 'This is a simple template.';
     const expectedAST: Node = {
       type: 'TEMPLATE',
-      content: [
-        { type: 'TEXT', content: 'This is a simple template.' },
-      ],
+      content: [{ type: 'TEXT', content: 'This is a simple template.' }]
     };
 
     const result = parse(tokenize(template));
@@ -148,7 +145,7 @@ describe('Parser Tests', () => {
 
   it('should throw error for unclosed each block', () => {
     const template = '{{#each items}}\n{{this}}';
-    
+
     expect(() => {
       parse(tokenize(template));
     }).toThrow('Unclosed each block');
