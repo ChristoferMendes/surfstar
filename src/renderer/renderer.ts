@@ -1,5 +1,5 @@
-import type { Node, Part, TemplateNode } from '../parser/ast';
 import { SurfstarError } from '../errors/SurfstarError';
+import type { Node, Part, TemplateNode } from '../parser/ast';
 import { handleError } from '../utils/error-handler';
 
 export function render(node: Node, data: Record<string, any>, filePath?: string): string {
@@ -80,9 +80,11 @@ function renderEach(part: Part, data: Record<string, any>, filePath?: string): s
 
   try {
     const array = getNestedPropertyValue(data, part.arrayName.split('.'));
-    const isValid = validateEachArray(array, part.arrayName, filePath);
-
-    if (!isValid) return '';
+    
+    // Return empty string for undefined or non-array values
+    if (array === undefined || array === null || !Array.isArray(array)) {
+      return '';
+    }
 
     return array
       .map((item, index) => {
