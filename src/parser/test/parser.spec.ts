@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test';
-import { parse } from '../parser';
-import type { Node } from '../ast';
 import { tokenize } from '../../lexer/lexer';
+import type { Node } from '../ast';
+import { parse } from '../parser';
 
 describe('Parser Tests', () => {
   it('should parse a template with a variable', () => {
@@ -148,6 +148,6 @@ describe('Parser Tests', () => {
 
     expect(() => {
       parse(tokenize(template));
-    }).toThrow('Unclosed each block');
+    }).toThrow('Unclosed {{#each}} block in template');
   });
 });
