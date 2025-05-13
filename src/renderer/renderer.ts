@@ -2,7 +2,14 @@ import { SurfstarError } from '../errors/SurfstarError';
 import type { Node, Part, TemplateNode } from '../parser/ast';
 import { handleError } from '../utils/error-handler';
 
-export function render(node: Node, data: Record<string, any>, filePath?: string): string {
+export type TemplateDataValue = string | number | boolean | Date | null | undefined | TemplateDataObject | TemplateDataArray;
+export interface TemplateDataObject {
+  [key: string]: TemplateDataValue;
+}
+export interface TemplateDataArray extends Array<TemplateDataValue> {}
+export type TemplateData = Record<string, TemplateDataValue>;
+
+export function render(node: Node, data: TemplateData, filePath?: string): string {
   try {
     validateTemplateNode(node, filePath);
     return node.content.map((part) => renderPart(part, data, filePath)).join('');
@@ -21,7 +28,7 @@ function validateTemplateNode(node: Node, filePath?: string): asserts node is Te
   }
 }
 
-function renderPart(part: Part, data: Record<string, any>, filePath?: string): string {
+function renderPart(part: Part, data: TemplateData, filePath?: string): string {
   try {
     switch (part.type) {
       case 'TEXT':
@@ -31,7 +38,7 @@ function renderPart(part: Part, data: Record<string, any>, filePath?: string): s
       case 'EACH':
         return renderEach(part, data, filePath);
       default:
-        throw SurfstarError.rendererError(`Unknown node type: ${(part as any).type}`, { filePath });
+        throw SurfstarError.rendererError(`Unknown node type: ${(part as Part).type}`, { filePath });
     }
   } catch (error) {
     return handleError(error, {
@@ -42,7 +49,7 @@ function renderPart(part: Part, data: Record<string, any>, filePath?: string): s
   }
 }
 
-function renderVariable(part: Part, data: Record<string, any>, filePath?: string): string {
+function renderVariable(part: Part, data: TemplateData, filePath?: string): string {
   if (part.type !== 'VARIABLE') {
     throw SurfstarError.rendererError(`Expected variable node but got ${part.type}`, { filePath });
   }
@@ -60,20 +67,20 @@ function renderVariable(part: Part, data: Record<string, any>, filePath?: string
   }
 }
 
-function getNestedPropertyValue(data: Record<string, any>, variablePath: string[]): any {
+function getNestedPropertyValue(data: TemplateData, variablePath: string[]): TemplateDataValue {
   try {
     return variablePath.reduce((value, key) => {
       if (value === undefined || value === null) {
         return undefined;
       }
-      return value[key];
-    }, data);
+      return (value as TemplateDataObject)[key];
+    }, data as TemplateDataValue);
   } catch (error) {
     return undefined;
   }
 }
 
-function renderEach(part: Part, data: Record<string, any>, filePath?: string): string {
+function renderEach(part: Part, data: TemplateData, filePath?: string): string {
   if (part.type !== 'EACH') {
     throw SurfstarError.rendererError(`Expected each node but got ${part.type}`, { filePath });
   }
@@ -88,7 +95,7 @@ function renderEach(part: Part, data: Record<string, any>, filePath?: string): s
 
     return array
       .map((item, index) => {
-        const itemContext = {
+        const itemContext: TemplateData = {
           ...data,
           this: item,
           '@index': index
@@ -105,7 +112,7 @@ function renderEach(part: Part, data: Record<string, any>, filePath?: string): s
   }
 }
 
-function validateEachArray(array: any[], arrayName: string, filePath?: string): array is any[] {
+function validateEachArray(array: TemplateDataArray, arrayName: string, filePath?: string): array is TemplateDataArray {
   if (array === undefined) {
     throw SurfstarError.rendererError(`Cannot find array '${arrayName}' in template data`, { filePath });
   }
