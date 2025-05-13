@@ -1,11 +1,18 @@
 import { SurfstarError } from '../errors/SurfstarError';
 
+export interface ErrorOptions {
+  filePath?: string;
+  lineNumber?: number;
+  columnNumber?: number;
+  originalError?: Error;
+}
+
 type ErrorHandlerOptions = {
   filePath?: string;
   lineNumber?: number;
   columnNumber?: number;
   defaultMessage: string;
-  errorFactory: (message: string, options: any) => SurfstarError;
+  errorFactory: (message: string, options: ErrorOptions) => SurfstarError;
 };
 
 /**
