@@ -6,7 +6,7 @@
 
 ![surfstar](https://github.com/ChristoferMendes/surfstar/assets/107426464/165060de-cf7e-427c-a4f4-7cba5d00e63e) 
 
-Hey there\! 👋 Welcome to Surfstar, a straightforward template engine for Node.js and TypeScript.
+Hey there\! 👋 Welcome to Surfstar, a straightforward template engine for Bun.
 
 Need to generate HTML, emails, or other text-based content dynamically? Surfstar aims to make it simple by letting you easily mix data into your text templates.
 
